@@ -10,6 +10,7 @@ import 'LoginScreen.dart';
 class HomePageScreens extends StatelessWidget {
 
 
+
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
@@ -24,16 +25,25 @@ class HomePageScreens extends StatelessWidget {
                      actions: <Widget>[
                        Container(
                          margin: EdgeInsets.only(right: 10),
-                         child: GestureDetector(
+                         // ignore: deprecated_member_use
+                         child: FlatButton(onPressed: () {
+                           return showAlertDialog(context);
 
-                         onTap: () {
-                           remove();
-                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>loginScreen()));
                          },
-                             child: Icon(
-                                  CupertinoIcons.power,color: mainblue,
-                          ),
+                           child: Icon( CupertinoIcons.power,color: mainblue,),
+
                          ),
+                         // child: GestureDetector(
+                         //
+                         // onTap: ()
+                         //   {
+                         //   remove();
+                         //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>loginScreen()));
+                         //   },
+                         //     child: Icon(
+                         //          CupertinoIcons.power,color: mainblue,
+                         //  ),
+                         // ),
                        )
                      ],
                      backgroundColor: maincolor,
@@ -71,3 +81,45 @@ remove() async {
   prefs.remove('username');
 }
 
+showAlertDialog(BuildContext context) {
+  // set up the button
+
+  Widget cancelButton = FlatButton(
+    child: Text("yes"),
+    onPressed:  () {
+        remove();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => loginScreen(),
+          ),
+              (route) => false,
+        );
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>loginScreen()));
+    },
+
+  );
+  Widget continueButton = FlatButton(
+    child: Text("No"),
+    onPressed:  () {
+      Navigator.of(context).pop(); // dismiss dialog
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Log-out"),
+    content: Text("Are you want to logout "),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
