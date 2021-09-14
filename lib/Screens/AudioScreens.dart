@@ -61,10 +61,13 @@ Widget build(BuildContext context) {
     body: Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(5.0),
+
+          padding: const EdgeInsets.only(top: 10.0),
           child: Container(
-            padding:EdgeInsets.symmetric(horizontal: 5.0),
+
+            padding:EdgeInsets.symmetric(horizontal: 2.0),
             decoration: BoxDecoration(
+
                 borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Colors.black, width: 1),
             ),
