@@ -1,4 +1,7 @@
 
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_galleyapp/Constats/ColorConstants.dart';
@@ -9,16 +12,64 @@ import 'RegisterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+
 late SharedPreferences prefs;
-class loginScreen extends StatelessWidget {
-   String? username;
-   String?  password;
-   //late SharedPreferences prefs;
+class loginScreen extends StatefulWidget {
+
+
 
   static Future init() async {
      prefs = await SharedPreferences.getInstance();
   }
 
+  @override
+  State<loginScreen> createState() => _loginScreenState();
+
+
+}
+
+class _loginScreenState extends State<loginScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.run(() {
+      try {
+        InternetAddress.lookup('google.com').then((result) {
+          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+            print('connected');
+          } else {
+            _showDialog(); // show dialog
+          }
+        }).catchError((error) {
+          _showDialog(); // show dialog
+        });
+      } on SocketException catch (_) {
+        _showDialog();
+        print('not connected'); // show dialog
+      }
+    });
+
+  }
+
+  void _showDialog() {
+    // dialog implementation
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Internet needed!"),
+        content: Text("You may want to exit the app here"),
+        actions: <Widget>[FlatButton(child: Text("EXIT"), onPressed: () {})],
+      ),
+    );
+  }
+
+
+
+  String? username;
+
+   String?  password;
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +245,13 @@ class loginScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }
+
+
+
+
 save(String username,String password) async {
   await loginScreen.init();
 

@@ -69,18 +69,25 @@ class HomePageScreens extends StatelessWidget {
                  ),
 
                  drawer: Drawer(
+
                    child: ListView(
                      // Important: Remove any padding from the ListView.
                      padding: EdgeInsets.zero,
                      children: <Widget>[
-                       UserAccountsDrawerHeader(
-                         accountName: Text("Gaurav Solanki"),
-                         accountEmail: Text("gaurav@gmail.com"),
-                         currentAccountPicture: CircleAvatar(
-                           backgroundColor: Colors.orange,
-                           child: Text(
-                             "G",
-                             style: TextStyle(fontSize: 40.0),
+                       Container(
+
+                         child: UserAccountsDrawerHeader(
+                           decoration: BoxDecoration(
+                             color: maincolor,
+                           ),
+                           accountName: Text("Gaurav Solanki",style: TextStyle(color: mainblue),),
+                           accountEmail: Text("gaurav@gmail.com",style: TextStyle(color: mainblue),),
+                           currentAccountPicture: CircleAvatar(
+                             backgroundColor: Colors.orange,
+                             child: Text(
+                               "G",
+                               style: TextStyle(fontSize: 40.0),
+                             ),
                            ),
                          ),
                        ),
@@ -121,6 +128,8 @@ class HomePageScreens extends StatelessWidget {
 
     );
   }
+
+
 }
 remove() async {
   await loginScreen.init();
