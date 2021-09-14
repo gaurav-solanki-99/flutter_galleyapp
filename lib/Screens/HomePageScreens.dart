@@ -21,6 +21,7 @@ class HomePageScreens extends StatelessWidget {
                child: Scaffold(
 
                    appBar: AppBar(
+                     iconTheme: IconThemeData(color: Colors.green),
                      title: Text("My Gallery ",style: TextStyle(color: mainblue),),
                      actions: <Widget>[
                        Container(
@@ -58,10 +59,7 @@ class HomePageScreens extends StatelessWidget {
                            ],
                        ),
                    ),
-                 body:
-
-
-                 TabBarView(
+                 body: TabBarView(
                      children: [
                          ImageScreens(),
                          VideoScreens(),
@@ -69,10 +67,58 @@ class HomePageScreens extends StatelessWidget {
                      ],
 
                  ),
+
+                 drawer: Drawer(
+                   child: ListView(
+                     // Important: Remove any padding from the ListView.
+                     padding: EdgeInsets.zero,
+                     children: <Widget>[
+                       UserAccountsDrawerHeader(
+                         accountName: Text("Gaurav Solanki"),
+                         accountEmail: Text("gaurav@gmail.com"),
+                         currentAccountPicture: CircleAvatar(
+                           backgroundColor: Colors.orange,
+                           child: Text(
+                             "G",
+                             style: TextStyle(fontSize: 40.0),
+                           ),
+                         ),
+                       ),
+                       ListTile(
+                         leading: Icon(Icons.home), title: Text("Home"),
+                         onTap: () {
+                           Navigator.pop(context);
+                         },
+                       ),
+                       ListTile(
+                         leading: Icon(Icons.settings), title: Text("Settings"),
+                         onTap: () {
+                           Navigator.pop(context);
+                         },
+                       ),
+                       ListTile(
+                         leading: Icon(Icons.contacts), title: Text("Contact Us"),
+                         onTap: () {
+                           Navigator.pop(context);
+                         },
+                       ),
+                     ],
+                   ),
+                 ),
                ),
 
              ),
          ),
+
+
+
+
+
+
+
+
+
+
     );
   }
 }

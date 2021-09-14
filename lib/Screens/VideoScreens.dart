@@ -20,9 +20,10 @@ class DropDown extends StatefulWidget {
 
 class DropDownWidget extends State {
 
-  String dropdownValue = 'One';
+  String dropdownValue = 'Select  ';
 
   List <String> spinnerItems = [
+    'Select  ',
     'One',
     'Two',
     'Three',
@@ -41,13 +42,15 @@ class DropDownWidget extends State {
 
           Container(
               width: 100,
+
             child: DropdownButton<String>(
 
               value: dropdownValue,
+
               icon: Icon(Icons.arrow_drop_down),
               iconSize: 24,
               elevation: 16,
-              style: TextStyle(color: Colors.black, fontSize: 18),
+              style: TextStyle(color: Colors.black, fontSize: 18, ),
               underline: Container(
                 height: 2,
                 color: maingreen,
@@ -60,6 +63,7 @@ class DropDownWidget extends State {
               items: spinnerItems.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
+
                   child: Text(value),
                 );
               }).toList(),
