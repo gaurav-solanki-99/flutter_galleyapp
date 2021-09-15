@@ -2,8 +2,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_galleyapp/Constats/ColorConstants.dart';
 import 'package:flutter_galleyapp/Screens/HomePageScreens.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class registerScreen  extends StatelessWidget {
+
+class registerScreen  extends StatefulWidget {
+  @override
+  State<registerScreen> createState() => _registerScreenState();
+
+
+}
+
+class _registerScreenState extends State<registerScreen> {
+
+  String? username;
+  String?  password;
+
+
+  Future<dynamic> sendData(String? username, String? password) async
+  {
+       var res = await http.post(Uri.parse("https://reqres.in/api/users?name"+"username"+"&job="+"password"));
+
+       print(res.statusCode);
+
+
+       if(res.statusCode==201)
+         {
+
+           Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageScreens()));
+
+         }
+
+       print(res.body);
+        return res;
+
+
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -72,6 +109,9 @@ class registerScreen  extends StatelessWidget {
                                 color: mainblue,
                               ),
                             ),
+                            onChanged: (username){
+                              this.username=username;
+                            },
                           ),
                         ),
                       ),
@@ -96,6 +136,10 @@ class registerScreen  extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
+                            onChanged: (password)
+                            {
+                              this.password=password;
+                            },
                           ),
                         ),
                       ),
@@ -115,7 +159,35 @@ class registerScreen  extends StatelessWidget {
 
                         child: FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageScreens()));
+
+                            FutureBuilder(
+                              future: sendData(username,password),
+                              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot)
+                              {
+                                print(snapshot.error.toString());
+
+                                if(snapshot.hasError)
+                                {
+
+                                  return Center(
+                                    child: Text("Error in snapshot"),
+
+                                  );
+                                }
+                                else if(snapshot.hasData)
+                                {
+                                  print(snapshot.data);
+                                  return Center(
+                                    child: Text("Data Save Success fully"),
+                                  );
+                                }
+                                return  Center(
+                                  child: CircularProgressIndicator(),
+                                );
+
+                              },
+                             );
+
                           },
                           child:  Text(
                             "Sign Up", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
